@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const authRouter = require('./routes/auth.route');
+const videoRouter = require('./routes/video.route');
 const { errorHandler, errorConverter } = require('./middleware/error'); // Adjust the path as necessary
 const ApiError = require('./utils/ApiError'); // Adjust the path as necessary
 const httpStatus = require('http-status');
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Define API routes
 app.use('/api/auth', authRouter);
+app.use('/api/videos', videoRouter);
 
 
 
