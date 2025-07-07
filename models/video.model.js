@@ -22,16 +22,11 @@ const videoSchema = new mongoose.Schema({
         required: true,
         maxlength: 100, // Optional: limit the length of the video name
     },
-    amount: {
-        type: Number,
-        required: true,
-        min: 0,
-    },
     message: {
         type: String,
         maxlength: 500,
     },
-    timestamp: {
+    createdat: {
         type: Date,
         default: Date.now,
     },
