@@ -30,6 +30,11 @@ const videoSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    status: {
+        type: String,
+        enum: ['available', 'pending', 'rejected'], // Define allowed values
+        default: 'pending', // Default status
+    },
 });
 
 const Video = mongoose.model('Video', videoSchema);

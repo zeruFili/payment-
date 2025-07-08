@@ -24,7 +24,7 @@ const errorConverter = (err, req, res, next) => {
 const errorHandler = (err, req, res, next) => {
   let { statusCode , message } = err; // Default status code to 500 if not set
   if(config.env === 'production' && !err.isOperational) {
-    statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    statusCode = httpStatus.default.INTERNAL_SERVER_ERROR;
     message = httpStatus[statusCode];
   }
   const response = {

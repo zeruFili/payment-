@@ -4,6 +4,7 @@ const {
 	PASSWORD_RESET_REQUEST_TEMPLATE,
 	PASSWORD_RESET_SUCCESS_TEMPLATE,
 	VERIFICATION_EMAIL_TEMPLATE,
+	WELCOME_EMAIL_TEMPLATE
 } = require("./emailTemplates.js");
 
 dotenv.config();
@@ -34,20 +35,21 @@ const sendVerificationEmail = async (email, verificationToken) => {
 };
 
 const sendWelcomeEmail = async (email, name) => {
-	const mailOptions = {
-		from: process.env.Email_User,
-		to: email,
-		subject: "Welcome to Auth Company!",
-		html: `<p>Welcome, ${name}!</p>`,
-	};
+  const mailOptions = {
+    from: `Love Offering <${process.env.Email_User}>`,
+    to: email,
+    subject: "Welcome to Love Offering - Bless and Be Blessed!",
+    html: WELCOME_EMAIL_TEMPLATE
+      .replace("{userName}", name),
+  };
 
-	try {
-		const info = await transporter.sendMail(mailOptions);
-		console.log("Welcome email sent successfully", info.response);
-	} catch (error) {
-		console.error("Error sending welcome email", error);
-		throw new Error(`Error sending welcome email: ${error}`);
-	}
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Welcome email sent successfully", info.response);
+  } catch (error) {
+    console.error("Error sending welcome email", error);
+    throw new Error(`Error sending welcome email: ${error}`);
+  }
 };
 
 const sendPasswordResetEmail = async (email, resetURL) => {

@@ -9,7 +9,7 @@ const signup = catchAsync(async (req, res) => {
   const { email, password, first_name, last_name, phone_number } = req.body;
 
   const { user, accessToken, refreshToken } = await authService.createUser(email, password, first_name, last_name, phone_number);
-  setCookies(res, accessToken, refreshToken);
+ 
 
   res.status(httpStatus.default.CREATED).json({
     success: true,
@@ -27,7 +27,8 @@ const signup = catchAsync(async (req, res) => {
 const verifyEmail = catchAsync(async (req, res) => {
   const { code } = req.body;
 
-  const user = await authService.verifyUserEmail(code);
+  const { user, accessToken, refreshToken } = await authService.verifyUserEmail(code);
+   setCookies(res, accessToken, refreshToken);
   await authService.sendWelcomeEmail(user.email, user.first_name);
 
   res.status(httpStatus.default.OK).json({
@@ -38,6 +39,7 @@ const verifyEmail = catchAsync(async (req, res) => {
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
+      accessToken,
     },
   });
 });
@@ -45,12 +47,17 @@ const verifyEmail = catchAsync(async (req, res) => {
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
+  // Attempt to log in the user and get user info and tokens
   const { user, accessToken, refreshToken } = await authService.loginUser(email, password);
+
+  // Set cookies with tokens
   setCookies(res, accessToken, refreshToken);
 
+  // Respond with user info and tokens
   res.status(httpStatus.default.OK).json({
     success: true,
     message: "Logged in successfully",
+    accessToken,  // Optionally include the refresh token if needed
     user: {
       _id: user._id,
       first_name: user.first_name,
@@ -140,5 +147,5 @@ module.exports = {
   updateUserProfile,
   getMyProfile,
   getAllUsers,
-  checkAuth, // Exporting checkAuth
+  checkAuth, 
 };

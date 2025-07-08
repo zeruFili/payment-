@@ -6,7 +6,7 @@ const {
   sendVerificationEmail,
   sendWelcomeEmail,
 } = require("../mailtrap/emails.js");
-const generateTokens = require("../utils/generateTokenAndSetCookie.js"); // Token generation logic
+const generateTokens = require("../utils/generateTokens.js"); // Token generation logic
 const jwt = require("jsonwebtoken");
 
 const createUser = async (email, password, first_name, last_name, phone_number) => {
@@ -34,6 +34,8 @@ const createUser = async (email, password, first_name, last_name, phone_number) 
   user.refreshToken = refreshToken;
   await user.save();
 
+  console.log(user.verificationToken)
+
   await sendVerificationEmail(user.email, user.verificationToken);
 
   return { user, accessToken, refreshToken };
@@ -43,7 +45,10 @@ const verifyUserEmail = async (code) => {
   const user = await User.findOne({
     verificationToken: code,
     verificationTokenExpiresAt: { $gt: Date.now() },
-  });
+  }); 
+   const { accessToken, refreshToken } = generateTokens(user._id);
+  user.refreshToken = refreshToken;
+  await user.save();
 
   if (!user) {
     throw new Error("Invalid or expired verification code");
@@ -54,7 +59,7 @@ const verifyUserEmail = async (code) => {
   user.verificationTokenExpiresAt = undefined;
   await user.save();
 
-  return user;
+  return { user, accessToken, refreshToken };
 };
 
 const loginUser = async (email, password) => {

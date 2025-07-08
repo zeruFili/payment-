@@ -94,8 +94,55 @@ const PASSWORD_RESET_REQUEST_TEMPLATE = `
 </html>
 `;
 
+
+const WELCOME_EMAIL_TEMPLATE = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Love Offering</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
+    <h1 style="color: white; margin: 0;">Welcome to Love Offering</h1>
+  </div>
+  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <p>Hello {userName},</p>
+    <p>Thank you for joining Love Offering, the platform where you can support Christian preachers and artists through financial blessings!</p>
+    
+    <div style="text-align: center; margin: 30px 0;">
+      <div style="background-color: #4CAF50; color: white; width: 60px; height: 60px; line-height: 60px; border-radius: 50%; display: inline-block; font-size: 30px;">
+        ❤️
+      </div>
+    </div>
+    
+    <p>With Love Offering, you can:</p>
+    <ul>
+      <li>Support your favorite Christian content creators</li>
+      <li>Bless preachers who have impacted your spiritual life</li>
+      <li>Discover new anointed artists and ministers</li>
+      <li>Give with love and receive blessings in return</li>
+    </ul>
+    
+    <p>We're excited to have you as part of our community of givers and receivers. As the Scripture says: <em>"Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver."</em> (2 Corinthians 9:7)</p>
+    
+  
+    
+    <p>If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
+    <p>May God bless you abundantly as you bless others!</p>
+    <p>In Christ's love,<br>The Love Offering Team</p>
+  </div>
+  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
+    <p>This is an automated message, please do not reply to this email.</p>
+  </div>
+</body>
+</html>
+`;
+
 module.exports = {
-	VERIFICATION_EMAIL_TEMPLATE,
-	PASSWORD_RESET_SUCCESS_TEMPLATE,
-	PASSWORD_RESET_REQUEST_TEMPLATE,
+  VERIFICATION_EMAIL_TEMPLATE,
+  PASSWORD_RESET_SUCCESS_TEMPLATE,
+  PASSWORD_RESET_REQUEST_TEMPLATE,
+  WELCOME_EMAIL_TEMPLATE
 };
